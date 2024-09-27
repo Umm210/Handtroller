@@ -7,10 +7,10 @@ Hantroller is a computer vision-based hand gesture controller that enables users
 ## Left Hand:
 Left hand can be used to control movement keys W, A, S, D using finegr gestures. 
 
-**W** - Middle finger 
-**A** - Ring Finger
-**S** - Pinky finger
-**D** - Index finger
+**W** - Middle finger  
+**A** - Ring Finger  
+**S** - Pinky finger  
+**D** - Index finger  
 **Space** - Thumb finger (move thumb towards the index finger side)
 
 #### Note: The fingers must be below the finger and hand joint for the controls to input.
