@@ -13,7 +13,7 @@ S - Pinky finger
 D - Index finger
 Space - Thumb finger (move thumb towards the index finger side)
 
-## Note: The fingers must be below the finger and hand joint for the controls to input.
+#### Note: The fingers must be below the finger and hand joint for the controls to input.
 
 ## Right Hand:
 
