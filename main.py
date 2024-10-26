@@ -69,17 +69,17 @@ while True:
             if handedness == 'Left':
 
                 # defining hand gestures
-                w_key = middle_finger_tip.y > thumb_tip.y or middle_finger_tip.y > middle_finger_mcp.y
-                a_key = ring_finger_tip.y > thumb_tip.y or ring_finger_tip.y > ring_finger_mcp.y
-                s_key = pinky_finger_tip.y > thumb_tip.y or pinky_finger_tip.y > pinky_finger_mcp.y
-                d_key = index_finger_tip.y > thumb_tip.y or index_finger_tip.y > index_finger_mcp.y
+                w_key = middle_finger_tip.y > middle_finger_mcp.y
+                a_key = ring_finger_tip.y > ring_finger_mcp.y
+                s_key = pinky_finger_tip.y > pinky_finger_mcp.y
+                d_key = index_finger_tip.y > index_finger_mcp.y
                 space_key = thumb_tip.y > thumb_mcp.y
 
                 # W key
                 if w_key:
                     pyautogui.keyDown('w')
                     print('W down')
-                elif not w_key and w_state:
+                else:
                     pyautogui.keyUp('w')
                     # print('W up')
 
@@ -87,7 +87,7 @@ while True:
                 if a_key:
                     pyautogui.keyDown('a')
                     print('A down')
-                elif not a_key and a_state:
+                else:
                     pyautogui.keyUp('a')
                     # print('A up')
 
@@ -95,7 +95,7 @@ while True:
                 if s_key:
                     pyautogui.keyDown('s')
                     print('S down')
-                elif not s_key and s_state:
+                else:
                     pyautogui.keyUp('s')
                     # print('S up')
 
@@ -103,7 +103,7 @@ while True:
                 if d_key:
                     pyautogui.keyDown('d')
                     print('D down')
-                elif not d_key and d_state:
+                else:
                     pyautogui.keyUp('d')
                     # print('D up')
 
@@ -115,7 +115,6 @@ while True:
                 #     pyautogui.keyUp('space')
                 #     print('Space up')
 
-                # calculating distance between index and thumb to trigger mouse click
                 thumb_index_distance = math.sqrt(
                     (index_finger_mcp.x - thumb_tip.x) ** 2 + (index_finger_mcp.y - thumb_tip.y) ** 2)
                 if thumb_index_distance < 0.04:
@@ -135,37 +134,22 @@ while True:
             # for right hand (mouse hand)
             if handedness == 'Right':
 
-                prev_mouse_x = prev_mouse_y = 0
+                # calculating dist between thumb and index
+                thumb_distance = abs(index_finger_tip.x - middle_finger_tip.x) + abs(
+                    index_finger_tip.y - middle_finger_tip.y)
 
-                # getting new mouse coordinates from the index fingertip
-                new_mouse_x = int(index_finger_tip.x * screen_width)
-                new_mouse_y = int(index_finger_tip.y * screen_height)
-
-                # applying smoothness by averaging the current position with the previous one
-                if prev_mouse_x is not None and prev_mouse_y is not None:
-                    mouse_x = int(smooth_factor * new_mouse_x + (1 - smooth_factor) * prev_mouse_x)
-                    mouse_y = int(smooth_factor * new_mouse_y + (1 - smooth_factor) * prev_mouse_y)
-                else:
-                    mouse_x, mouse_y = new_mouse_x, new_mouse_y
+                # mouse movement
+                mouse_x = int(index_finger_tip.x * pyautogui.size().width)
+                mouse_y = int(index_finger_tip.y * pyautogui.size().height)
 
                 pyautogui.moveTo(mouse_x, mouse_y)
 
-                clicking = False
-
-                # calculating distance between index and thumb to trigger mouse click
-                thumb_index_distance = math.sqrt(
-                    (index_finger_tip.x - thumb_tip.x) ** 2 + (index_finger_tip.y - thumb_tip.y) ** 2)
-
-                if thumb_index_distance < 0.08:
-                    if not clicking:
-                        pyautogui.mouseDown()
-                        clicking = True
-                        print('click')
+                if thumb_distance < 0.05:
+                    pyautogui.mouseDown()
+                    print('click')
                 else:
-                    if clicking:
-                        pyautogui.mouseUp()
-                        clicking = False
-                        print('mouse up')
+                    pyautogui.mouseUp()
+
     # window setting
     window_width = 800
     window_height = 600
