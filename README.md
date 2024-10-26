@@ -1,4 +1,4 @@
-# Handtroller
+# Handtroller (wasd)
 
 Hantroller is a computer vision-based hand gesture controller that enables users to control basic controls for games and mouse inputs to navigate through your PC. The system uses Mediapipe library for hand detection, tracking and Pyautogui to enter key and mouse inputs.
 
